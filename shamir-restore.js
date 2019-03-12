@@ -1,4 +1,4 @@
-const secrets = require('./modules/secrets.js-grempe');
+const secrets = require('./modules/secrets.js-grempe/secrets');
 const params = require('./lib/restore-params');
 const read = require('./lib/read');
 const fs = require('fs');
