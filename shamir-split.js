@@ -3,6 +3,8 @@ const params = require('./lib/split-params');
 const read = require('./lib/read');
 const fs = require('fs');
 
+process.umask(0o077);
+
 async function getSecret() {
   if (params.filename) {
     return await read.file(params.filename, {encoding: 'utf-8'});
@@ -47,7 +49,8 @@ getSecret()
       for (let i in shares) {
         try {
           let writeFilename = `${params.out}-${parseInt(i) + 1}`;
-          fs.writeFileSync(writeFilename, shares[i]);
+          fs.writeFileSync(writeFilename, shares[i], { mode: '0600' });
+          fs.chmodSync(writeFilename, '0600');
           console.log(`Saved share ${parseInt(i) + 1} of ${shares.length} to file: ${writeFilename}`);
         } catch (err) {
           err.message = 'Filesystem ' + err.message;
@@ -61,7 +64,8 @@ getSecret()
       for (let i in shares) {
         try {
           let writeFilename = `${params.outClean}-${parseInt(i) + 1}`;
-          fs.writeFileSync(writeFilename, getClean(shares[i]));
+          fs.writeFileSync(writeFilename, getClean(shares[i]), { mode: '0600' });
+          fs.chmodSync(writeFilename, '0600');
           console.log(`Saved clean-formatted share ${parseInt(i) + 1} of ${shares.length} to file: ${writeFilename}`);
         } catch (err) {
           err.message = 'Filesystem ' + err.message;

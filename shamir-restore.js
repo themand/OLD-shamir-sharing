@@ -3,6 +3,8 @@ const params = require('./lib/restore-params');
 const read = require('./lib/read');
 const fs = require('fs');
 
+process.umask(0o077);
+
 async function getShares() {
   if (Array.isArray(params.files) && params.files.length > 1) {
     const tasks = [];
@@ -39,7 +41,8 @@ getShares()
     /* Save secret to file if enabled */
     if (typeof params.out !== 'undefined') {
       try {
-        fs.writeFileSync(params.out, secret);
+        fs.writeFileSync(params.out, secret, { mode: '0600' });
+        fs.chmodSync(params.out, '0600');
         console.log(`Saved secret to file: ${params.out}`);
       } catch (err) {
         err.message = 'Filesystem ' + err.message;
