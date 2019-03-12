@@ -1,0 +1,22 @@
+{
+  "name": "shamir-sharing",
+  "version": "1.0.0",
+  "description": "Shamir's Secret Sharing split and restore tool",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build_macos": "pkg -t macos --out-path bin/macos shamir-split.js && pkg -t macos --out-path bin/macos shamir-restore.js && cd bin/macos && shasum -p -a 256 shamir-* > macos-shamir-sharing.sha256",
+    "build_linux": "pkg -t linux --out-path bin/linux shamir-split.js && pkg -t linux --out-path bin/linux shamir-restore.js && cd bin/linux && shasum -p -a 256 shamir-* > linux-shamir-sharing.sha256",
+    "build_win": "pkg -t win --out-path bin/win shamir-split.js && pkg -t win --out-path bin/win shamir-restore.js && cd bin/win && shasum -p -a 256 shamir-* > win-shamir-sharing.sha256",
+    "build": "npm run build_macos && npm run build_linux && npm run build_win"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/themand/shamir-sharing.git"
+  },
+  "author": "Themand",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/themand/shamir-sharing/issues"
+  },
+  "homepage": "https://github.com/themand/shamir-sharing#readme"
+}
