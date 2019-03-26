@@ -7420,7 +7420,7 @@ exports.init();
         DOM.generated.innerHTML = "";
         // Get the input values
         var secret = DOM.secret.value;
-        var secretHex = secrets.str2hex(secret);
+        var secretHex = secrets.str2hex(secret, 1);
         var total = parseFloat(DOM.total.value);
         var required = parseFloat(DOM.required.value);
         // validate the input
@@ -7485,7 +7485,7 @@ exports.init();
         // Combine the parts
         try {
             var combinedHex = secrets.combine(parts);
-            var combined = secrets.hex2str(combinedHex);
+            var combined = secrets.hex2str(combinedHex, 1);
         }
         catch (e) {
             DOM.combined.textContent = e.message;
