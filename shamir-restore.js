@@ -27,7 +27,7 @@ getShares()
     /* Restore secret from combined shares */
     let secret;
     try {
-      secret = secrets.hex2str(secrets.combine(shares));
+      secret = secrets.hex2str(secrets.combine(shares), 1);
     } catch (err) {
       err.message = 'Error combining shares: ' + err.message;
       throw err;
@@ -41,7 +41,7 @@ getShares()
     /* Save secret to file if enabled */
     if (typeof params.out !== 'undefined') {
       try {
-        fs.writeFileSync(params.out, secret, { mode: '0600' });
+        fs.writeFileSync(params.out, secret, { mode: '0600', encoding: 'binary' });
         fs.chmodSync(params.out, '0600');
         console.log(`Saved secret to file: ${params.out}`);
       } catch (err) {

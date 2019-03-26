@@ -7,7 +7,7 @@ process.umask(0o077);
 
 async function getSecret() {
   if (params.filename) {
-    return await read.file(params.filename, {encoding: 'utf-8'});
+    return await read.file(params.filename, {encoding: 'binary'});
   } else {
     console.log('Enter secret to encode. Enter empty line to finish.');
     return (await read.stdin()).join(`\n`);
@@ -27,10 +27,10 @@ getSecret()
   .then(secret => {
 
     /* Split secret */
-    const shares = secrets.share(secrets.str2hex(secret), params.shares, params.threshold);
+    const shares = secrets.share(secrets.str2hex(secret, 1), params.shares, params.threshold);
 
     /* Verify */
-    const combined = secrets.hex2str(secrets.combine(shares.slice(0, params.threshold)));
+    const combined = secrets.hex2str(secrets.combine(shares.slice(0, params.threshold)), 1);
     if (combined !== secret) {
       throw new Error('Internal error. Could not verify validity of shares data');
     }
