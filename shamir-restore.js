@@ -27,7 +27,7 @@ getShares()
     /* Restore secret from combined shares */
     let secret;
     try {
-      secret = secrets.hex2str(secrets.combine(shares), 1);
+      secret = secrets.hex2str(secrets.combine(shares));
     } catch (err) {
       err.message = 'Error combining shares: ' + err.message;
       throw err;

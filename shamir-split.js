@@ -27,10 +27,10 @@ getSecret()
   .then(secret => {
 
     /* Split secret */
-    const shares = secrets.share(secrets.str2hex(secret, 1), params.shares, params.threshold);
+    const shares = secrets.share(secrets.str2hex(secret), params.shares, params.threshold);
 
     /* Verify */
-    const combined = secrets.hex2str(secrets.combine(shares.slice(0, params.threshold)), 1);
+    const combined = secrets.hex2str(secrets.combine(shares.slice(0, params.threshold)));
     if (combined !== secret) {
       throw new Error('Internal error. Could not verify validity of shares data');
     }
